@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Banking App</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #7067eb;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    
+    .container {
+        background: rgb(224, 222, 63);
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+    }
+    
+    h1 {
+        text-align: center;
+    }
+    
+    .balance-section {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .form-section {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+    }
+    
+    input {
+        padding: 10px;
+        width: 60%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    button {
+        padding: 10px;
+        border: none;
+        background: #007bff;
+    color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background: #0056b3;
+    }
+    
+    .message {
+        text-align: center;
+        margin-top: 10px;
+    color: red;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+<h1>Simple Banking App</h1>
+<div class="balance-section">
+<h2>Your Balance: $<span id="balance">0.00</span></h2>
+</div>
+<div class="form-section">
+<input type="number" id="amountInput" placeholder="Enter amount" min="0">
+<button id="depositButton">Deposit</button>
+<button id="withdrawButton">Withdraw</button>
+</div>
+<div id="message" class="message"></div>
+</div>
+<script>
+    let balance = 0;
+
+// Update the displayed balance
+function updateBalance() {
+document.getElementById('balance').textContent = balance.toFixed(2);
+}
+
+// Deposit function
+function deposit() {
+constamountInput = document.getElementById('amountInput');
+const amount = parseFloat(amountInput.value);
+
+    if (amount > 0) {
+        balance += amount;
+updateBalance();
+displayMessage(`Successfully deposited $${amount.toFixed(2)}!`, 'success');
+    } else {
+displayMessage('Please enter a valid amount to deposit.', 'error');
+    }
+
+amountInput.value = '';
+}
+
+// Withdraw function
+function withdraw() {
+constamountInput = document.getElementById('amountInput');
+const amount = parseFloat(amountInput.value);
+
+    if (amount > 0 && amount <= balance) {
+        balance -= amount;
+updateBalance();
+displayMessage(`Successfully withdrew $${amount.toFixed(2)}!`, 'success');
+    } else if (amount > balance) {
+displayMessage('Insufficient funds!', 'error');
+    } else {
+displayMessage('Please enter a valid amount to withdraw.', 'error');
+    }
+
+amountInput.value = '';
+}
+
+// Display message
+function displayMessage(message, type) {
+constmessageDiv = document.getElementById('message');
+messageDiv.textContent = message;
+messageDiv.className = type === 'success' ? 'message success' : 'message error';
+}
+
+// Event listeners
+document.getElementById('depositButton').addEventListener('click', deposit);
+document.getElementById('withdrawButton').addEventListener('click', withdraw);
+
+// Initial balance update
+updateBalance();
+
+</script>
+</body>
+</html>
+
